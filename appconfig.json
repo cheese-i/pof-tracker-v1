@@ -1,0 +1,10 @@
+{
+  "name": "POF Tracker",
+  "description": "Player-Owned Farm growth timer and buyer reset tracker for RS3",
+  "appUrl": "index.html",
+  "configUrl": "appconfig.json",
+  "iconUrl": "icon.png",
+  "defaultWidth": 280,
+  "defaultHeight": 600,
+  "permissions": []
+}
