@@ -1,9 +1,9 @@
 {
   "name": "POF Tracker",
   "description": "Player-Owned Farm growth timer and buyer reset tracker for RS3",
-  "appUrl": "index.html",
-  "configUrl": "appconfig.json",
-  "iconUrl": "icon.png",
+  "appUrl": "https://cheese-i.github.io/pof-tracker-v1/index.html",
+  "configUrl": "https://cheese-i.github.io/pof-tracker-v1/appconfig.json",
+  "iconUrl": "https://cheese-i.github.io/pof-tracker-v1/icon.png",
   "defaultWidth": 280,
   "defaultHeight": 600,
   "permissions": []
