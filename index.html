@@ -410,6 +410,43 @@
     text-overflow: ellipsis;
   }
 
+
+  /* Pen species row */
+  .pen-species-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    background: rgba(39,56,87,.4);
+    border-bottom: 1px solid var(--border);
+  }
+  .pen-species-img-wrap {
+    width: 28px; height: 28px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(23,33,54,.5); border-radius: 3px; border: 1px solid var(--border);
+  }
+  .pen-species-img { width: 24px; height: 24px; object-fit: contain; image-rendering: pixelated; }
+  .pen-species-img-placeholder { width: 24px; height: 24px; display: inline-block; }
+  .pen-species-select { flex: 1; }
+
+  /* Slot add button */
+  .slot-add-row { padding: 6px 8px; }
+  .slot-add-btn {
+    width: 100%;
+    background: rgba(90,159,111,.12);
+    border: 1px dashed rgba(90,159,111,.4);
+    color: var(--green2);
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    letter-spacing: .5px;
+    transition: all .12s;
+  }
+  .slot-add-btn:hover { background: rgba(90,159,111,.22); border-color: var(--green2); }
+
 </style>
 </head>
 <body>
@@ -476,40 +513,49 @@ const AIMG = {
 
 const ANIMALS = {
   small:[
-    {id:'rabbit',    name:'Rabbit',     hasEgg:false, stages:{child:12,adolescent:21,adult:27},       beans:{child:5,  adolescent:25,  adult:21,  elder:17}, breeds:['Any','Common brown','Rellekkan cream','Piscatorian cottontail','Jackalope (shiny)']},
-    {id:'chicken',   name:'Chicken',    hasEgg:true,  stages:{egg:25,child:38,adolescent:76,adult:113}, beans:{egg:4,child:8,adolescent:40,adult:34,elder:28}, breeds:['Any','White hen','Rooster','Bandosian bantam','Varrockian red','Oomlie','Lizard chicken (shiny)']},
-    {id:'chinchompa',name:'Chinchompa', hasEgg:false, stages:{child:504,adolescent:882,adult:1134},   beans:{child:50, adolescent:250, adult:213, elder:175}, breeds:['Any','Grey','Carnivorous','Cobalt','Viridian','Azure','Crimson','Crystal','Volatile','Golden (shiny)']},
+    {id:'rabbit',    name:'Rabbit',     hasEgg:false, stages:{child:12,adolescent:21,adult:27},       beans:{child:5,  adolescent:25,  adult:21,  elder:17}},
+    {id:'chicken',   name:'Chicken',    hasEgg:true,  stages:{egg:25,child:38,adolescent:76,adult:113}, beans:{egg:4,child:8,adolescent:40,adult:34,elder:28}},
+    {id:'chinchompa',name:'Chinchompa', hasEgg:false, stages:{child:504,adolescent:882,adult:1134},   beans:{child:50, adolescent:250, adult:213, elder:175}},
   ],
   medium:[
-    {id:'sheep',   name:'Sheep',    hasEgg:false, stages:{child:24,adolescent:42,adult:54},         beans:{child:16, adolescent:80,  adult:68,  elder:56},  breeds:['Any','White ewe','White ram','Black','Summerdown','Springsheared','Winterwold','Fallfaced','Golden (shiny)']},
-    {id:'spider',  name:'Spider',   hasEgg:true,  stages:{egg:151,child:227,adolescent:454,adult:680}, beans:{egg:25,child:50,adolescent:250,adult:213,elder:175}, breeds:['Any','Spirit','Night','Corpse','Fever','Giant','Ice','Araxyte']},
-    {id:'zygomite',name:'Zygomite', hasEgg:false, stages:{child:1008,adolescent:1764,adult:2268},   beans:{child:187,adolescent:850, adult:722, elder:595}, breeds:['Any','Gloomshroom','Zanarian','Daemoncap','Arcspore','Magical (shiny)']},
+    {id:'sheep',   name:'Sheep',    hasEgg:false, stages:{child:24,adolescent:42,adult:54},         beans:{child:16, adolescent:80,  adult:68,  elder:56}},
+    {id:'spider',  name:'Spider',   hasEgg:true,  stages:{egg:151,child:227,adolescent:454,adult:680}, beans:{egg:25,child:50,adolescent:250,adult:213,elder:175}},
+    {id:'zygomite',name:'Zygomite', hasEgg:false, stages:{child:1008,adolescent:1764,adult:2268},   beans:{child:187,adolescent:850, adult:722, elder:595}},
   ],
   large:[
-    {id:'cow',   name:'Cow',    hasEgg:false, stages:{child:72,adolescent:126,adult:162},         beans:{child:34, adolescent:170, adult:144, elder:119}, breeds:['Any','Kandarin cow','Bull','Chocolate','Strawberry','Vanilla','Harlequin (shiny)']},
-    {id:'yak',   name:'Yak',    hasEgg:false, stages:{child:806,adolescent:1412,adult:1814},       beans:{child:150,adolescent:750, adult:638, elder:525}, breeds:['Any','Fremennik','Spirit','Sacred (shiny)']},
-    {id:'dragon',name:'Dragon', hasEgg:true,  stages:{egg:1008,child:1512,adolescent:3024,adult:4536}, beans:{egg:200,child:400,adolescent:2000,adult:1700,elder:1400}, breeds:['Any','Green','Blue','Red','Black','Royal (shiny)']},
+    {id:'cow',   name:'Cow',    hasEgg:false, stages:{child:72,adolescent:126,adult:162},         beans:{child:34, adolescent:170, adult:144, elder:119}},
+    {id:'yak',   name:'Yak',    hasEgg:false, stages:{child:806,adolescent:1412,adult:1814},       beans:{child:150,adolescent:750, adult:638, elder:525}},
+    {id:'dragon',name:'Dragon', hasEgg:true,  stages:{egg:1008,child:1512,adolescent:3024,adult:4536}, beans:{egg:200,child:400,adolescent:2000,adult:1700,elder:1400}},
   ]
 };
 
 const PENS = [
-  {id:'small_1', size:'small',  label:'Small I',   max:6},
-  {id:'small_2', size:'small',  label:'Small II',  max:6},
-  {id:'medium_1',size:'medium', label:'Medium I',  max:4},
-  {id:'medium_2',size:'medium', label:'Medium II', max:4},
-  {id:'large_1', size:'large',  label:'Large I',   max:3},
-  {id:'large_2', size:'large',  label:'Large II',  max:3},
+  {id:'small_1', size:'small',  label:'Small SW',   max:6},
+  {id:'small_2', size:'small',  label:'Small S',  max:6},
+  {id:'medium_1',size:'medium', label:'Medium N',  max:4},
+  {id:'medium_2',size:'medium', label:'Medium E', max:4},
+  {id:'large_1', size:'large',  label:'Large NW',   max:3},
+  {id:'large_2', size:'large',  label:'Large SE',  max:3},
 ];
 
 // ═══════════════════════════════════════════
 //  STATE
 // ═══════════════════════════════════════════
 let penData = {};
-try { penData = JSON.parse(localStorage.getItem('rs3pof_alt1') || '{}'); } catch(e){}
+let penMeta = {}; // pen-level settings (species), stored separately so array serialization doesn't drop them
+try {
+  penData = JSON.parse(localStorage.getItem('rs3pof_alt1') || '{}');
+  penMeta = JSON.parse(localStorage.getItem('rs3pof_alt1_meta') || '{}');
+} catch(e){}
 let openPens = new Set(['small_1']);   // expanded pen sections
 let openSlots = new Set();             // expanded slot content
 
-function save() { try { localStorage.setItem('rs3pof_alt1', JSON.stringify(penData)); } catch(e){} }
+function save() {
+  try {
+    localStorage.setItem('rs3pof_alt1', JSON.stringify(penData));
+    localStorage.setItem('rs3pof_alt1_meta', JSON.stringify(penMeta));
+  } catch(e){}
+}
 
 function getAnimal(id) {
   for (const sz of ['small','medium','large']) {
@@ -531,8 +577,25 @@ function minsTo(animal, from, to) {
 function ensureSlots(penId) {
   const max = PENS.find(p => p.id === penId).max;
   if (!penData[penId]) penData[penId] = [];
+  if (!penMeta[penId]) penMeta[penId] = {penAnimalId:''};
   while (penData[penId].length < max)
-    penData[penId].push({animalId:'', breed:'Any', stage:'child', startMs:null, goal:'adolescent'});
+    penData[penId].push({animalId:'', stage:'child', startMs:null, goal:'adolescent'});
+}
+
+function setPenAnimal(penId, animalId) {
+  ensureSlots(penId);
+  penMeta[penId].penAnimalId = animalId;
+  save(); buildApp();
+}
+
+function addAnimalToSlot(penId, idx) {
+  ensureSlots(penId);
+  const animalId = penMeta[penId].penAnimalId;
+  if (!animalId) return;
+  const a = getAnimal(animalId);
+  penData[penId][idx] = {animalId, stage:a?(a.hasEgg?'egg':'child'):'child', startMs:Date.now(), goal:'adolescent'};
+  openSlots.add(penId+'_'+idx);
+  save(); buildApp();
 }
 
 // ═══════════════════════════════════════════
@@ -551,10 +614,17 @@ function fmtMins(m) {
 // ═══════════════════════════════════════════
 //  BUYER RESETS
 // ═══════════════════════════════════════════
+// Buyer resets anchor to RS3 POF launch: 2018-09-03 00:00:00 UTC
+// Small: every 1 day, Medium: every 2 days, Large: every 3 days
+// All reset at 00:00 UTC on their cycle
+const POF_LAUNCH_MS = 1535932800000;
+
 function nextReset(days) {
   const cycleMs = days * 86400000;
-  const ms = cycleMs - (Date.now() % cycleMs);
-  return ms / 60000; // minutes until
+  const elapsed = Date.now() - POF_LAUNCH_MS;
+  const msIntoCycle = ((elapsed % cycleMs) + cycleMs) % cycleMs;
+  const msUntil = cycleMs - msIntoCycle;
+  return msUntil / 60000; // minutes until next reset
 }
 function updateResetBar() {
   const sizes = [{id:'small',days:1},{id:'medium',days:2},{id:'large',days:3}];
@@ -587,6 +657,17 @@ function buildApp() {
     }).filter(Boolean);
     const summary = count === 0 ? 'empty' : [...new Set(summaryParts)].join(', ');
 
+    ensureSlots(pen.id);
+    const penAnimalId = penMeta[pen.id].penAnimalId || '';
+    const penAnimal = penAnimalId ? getAnimal(penAnimalId) : null;
+
+    // Species selector options
+    let specsOpts = `<option value="">-- Select species --</option>`;
+    for (const a of ANIMALS[pen.size]) {
+      const imgUrl = AIMG[a.id] || '';
+      specsOpts += `<option value="${a.id}" ${penAnimalId===a.id?'selected':''}>${a.name}</option>`;
+    }
+
     html += `<div class="pen-section" id="pen_${pen.id}">
       <div class="pen-header" onclick="togglePen('${pen.id}')">
         <span class="pen-badge ${badgeCls}">${pen.size[0]}</span>
@@ -594,10 +675,16 @@ function buildApp() {
         <span class="pen-summary">${summary}</span>
         <span class="pen-chevron ${isOpen?'open':''}">&#9656;</span>
       </div>
-      <div class="pen-body ${isOpen?'open':''}">`;
+      <div class="pen-body ${isOpen?'open':''}">
+        <div class="pen-species-row">
+          <div class="pen-species-img-wrap">
+            ${penAnimal && AIMG[penAnimalId] ? `<img src="${AIMG[penAnimalId]}" class="pen-species-img" onerror="this.style.opacity=0" alt="">` : '<span class="pen-species-img-placeholder"></span>'}
+          </div>
+          <select class="pen-species-select" onchange="setPenAnimal('${pen.id}',this.value)">${specsOpts}</select>
+        </div>`;
 
     for (let idx = 0; idx < slots.length; idx++) {
-      html += buildSlot(pen, idx, slots[idx]);
+      html += buildSlot(pen, idx, slots[idx], penAnimalId);
     }
     html += `</div></div>`;
   }
@@ -605,7 +692,7 @@ function buildApp() {
   updateGlobal();
 }
 
-function buildSlot(pen, idx, slot) {
+function buildSlot(pen, idx, slot, penAnimalId) {
   const animal = slot.animalId ? getAnimal(slot.animalId) : null;
   const curStage = slot.stage || (animal ? (animal.hasEgg?'egg':'child') : 'child');
   const goal = slot.goal || 'adolescent';
@@ -613,156 +700,135 @@ function buildSlot(pen, idx, slot) {
   const slotKey = pen.id + '_' + idx;
   const isOpen = openSlots.has(slotKey);
 
+  // Slot header image + name
   const imgSrc = animal && AIMG[slot.animalId] ? AIMG[slot.animalId] : '';
   const imgTag = imgSrc
     ? `<img class="slot-img" src="${imgSrc}" onerror="this.style.opacity=0" alt="">`
     : `<span class="slot-img" style="display:inline-block"></span>`;
+  const nameLabel = animal ? animal.name : 'Empty';
 
-  const nameLabel = animal
-    ? animal.name + (slot.breed && slot.breed!=='Any' ? ' · '+slot.breed : '')
-    : 'Empty';
-
-  // Quick countdown for header (to goal)
+  // Quick countdown in header
   let headerExtra = '';
   if (animal && startMs && curStage !== 'elder') {
     const stages = getStages(animal), ci = stages.indexOf(curStage), gi = stages.indexOf(goal);
     if (gi > ci) {
       const tMs = startMs + minsTo(animal, curStage, goal)*60000;
       const ml = (tMs - Date.now())/60000;
-      const col = ml<=0?'#7abf85':ml<60?'var(--amber)':'var(--gold2)';
-      headerExtra = `<span style="font-size:15px;font-family:'Cinzel',serif;font-weight:700;color:${col};margin-left:3px">${ml<=0?'✓':fmtMins(ml)}</span>`;
+      const col = ml<=0 ? '#7abf85' : ml<60 ? 'var(--amber)' : 'var(--gold2)';
+      headerExtra = `<span style="font-size:13px;font-family:'Cinzel',serif;font-weight:700;color:${col};margin-left:3px">${ml<=0?'✓':fmtMins(ml)}</span>`;
     }
   }
 
+  // ── CONTENT ──────────────────────────────────────────────────
   let content = '';
-  if (isOpen) {
-    // Animal select
-    let aopts = `<option value="">-- Empty --</option>`;
-    for (const a of ANIMALS[pen.size]) {
-      aopts += `<option value="${a.id}" ${slot.animalId===a.id?'selected':''}>${a.name}</option>`;
-    }
 
-    // Breed
-    let breedHtml = '';
-    if (animal) {
-      let bo = '';
-      for (const b of animal.breeds) bo += `<option value="${b}" ${slot.breed===b?'selected':''}>${b}</option>`;
-      breedHtml = `<div class="field"><label>Breed</label><select onchange="sk('${pen.id}',${idx},'breed',this.value)">${bo}</select></div>`;
+  if (!animal) {
+    // Empty slot — show + Add button if pen has a species selected
+    if (penAnimalId) {
+      const a = getAnimal(penAnimalId);
+      content = `<div class="slot-add-row">
+        <button class="slot-add-btn" onclick="addAnimalToSlot('${pen.id}',${idx})">+ Add ${a ? a.name : ''}</button>
+      </div>`;
     }
-
-    // Stage pills
-    let pills = '';
-    if (animal) {
+  } else {
+    // Filled slot — always show content (collapsed = just header, expanded = full)
+    if (isOpen) {
+      // Stage pills
+      let pills = '';
       getStages(animal).forEach(s => {
         pills += `<button class="sp ${s} ${curStage===s?'on':''}" onclick="onStage('${pen.id}',${idx},'${s}')">${s[0].toUpperCase()+s.slice(1)}</button>`;
       });
-    }
 
-    // Timer
-    let timerHtml = '';
-    if (animal && curStage !== 'elder') {
-      const stages = getStages(animal), ci = stages.indexOf(curStage);
-      const hasAdol = stages.indexOf('adolescent') > ci;
-      const hasElder = stages.indexOf('elder') > ci;
-      const adolMins = hasAdol ? minsTo(animal,curStage,'adolescent') : null;
-      const elderMins = hasElder ? minsTo(animal,curStage,'elder') : null;
-      const dtVal = startMs ? new Date(startMs - new Date().getTimezoneOffset()*60000).toISOString().slice(0,16) : '';
+      // Goal buttons + countdown
+      let timerHtml = '';
+      if (curStage !== 'elder') {
+        const stages = getStages(animal), ci = stages.indexOf(curStage);
+        const hasAdol = stages.indexOf('adolescent') > ci;
+        const hasElder = stages.indexOf('elder') > ci;
+        const adolMins = hasAdol ? minsTo(animal, curStage, 'adolescent') : null;
+        const elderMins = hasElder ? minsTo(animal, curStage, 'elder') : null;
 
-      let cdHtml = '';
-      if (startMs) {
-        const goalIdx = stages.indexOf(goal), gi2 = goalIdx;
-        if (gi2 > ci) {
-          const goalMs = startMs + minsTo(animal,curStage,goal)*60000;
-          const goalML = (goalMs - Date.now())/60000;
-          let bigCls='', bigTC='';
-          if(goalML<=0){bigCls='ready';bigTC='t-ready';}
-          else if(goalML<60){bigCls='urgent';bigTC='t-urgent';}
-          const gCol = STAGE_COLORS[goal]||'#fff';
+        let cdHtml = '';
+        if (startMs) {
+          const goalIdx = stages.indexOf(goal);
+          if (goalIdx > ci) {
+            const goalMs = startMs + minsTo(animal, curStage, goal)*60000;
+            const goalML = (goalMs - Date.now())/60000;
+            let bigCls = '', bigTC = '';
+            if (goalML<=0) { bigCls='ready'; bigTC='t-ready'; }
+            else if (goalML<60) { bigCls='urgent'; bigTC='t-urgent'; }
+            const gCol = STAGE_COLORS[goal] || '#fff';
 
-          let subRows = '';
-          if (gi2 - ci > 1) {
-            let acc = 0;
-            for (let i = ci; i < gi2-1; i++) {
-              const dur = animal.stages[stages[i]]; if(!dur) continue;
-              acc += dur;
-              const tMs2 = startMs + acc*60000, ml2 = (tMs2-Date.now())/60000;
-              const ns = stages[i+1], col = STAGE_COLORS[ns]||'#fff';
-              let rC='',tC='';
-              if(ml2<=0){rC='ready';tC='t-ready';}
-              else if(ml2<60){rC='urgent';tC='t-urgent';}
-              subRows += `<div class="cdown-row ${rC}"><span class="cdown-lbl" style="color:${col}">${ns[0].toUpperCase()+ns.slice(1)}</span><span class="cdown-val ${tC}" data-target="${tMs2}">${ml2<=0?'✓':fmtMins(ml2)}</span></div>`;
+            let subRows = '';
+            if (goalIdx - ci > 1) {
+              let acc = 0;
+              for (let i = ci; i < goalIdx-1; i++) {
+                const dur = animal.stages[stages[i]]; if (!dur) continue;
+                acc += dur;
+                const tMs2 = startMs + acc*60000, ml2 = (tMs2-Date.now())/60000;
+                const ns = stages[i+1], col2 = STAGE_COLORS[ns] || '#fff';
+                let rC='', tC='';
+                if (ml2<=0) { rC='ready'; tC='t-ready'; }
+                else if (ml2<60) { rC='urgent'; tC='t-urgent'; }
+                subRows += `<div class="cdown-row ${rC}"><span class="cdown-lbl" style="color:${col2}">${ns[0].toUpperCase()+ns.slice(1)}</span><span class="cdown-val ${tC}" data-target="${tMs2}">${ml2<=0?'✓':fmtMins(ml2)}</span></div>`;
+              }
             }
+
+            let prevAcc = 0;
+            for (let i = 0; i < ci; i++) { const d = animal.stages[stages[i]]; if (d) prevAcc += d; }
+            const durCur = animal.stages[curStage] || 0;
+            const elapsed = (Date.now()-startMs)/60000 - prevAcc;
+            const pct = durCur ? Math.max(0, Math.min(100, (elapsed/durCur)*100)) : 0;
+
+            cdHtml = `<div class="cdown-box">
+              <div class="cdown-goal-lbl" style="color:${gCol}">&#9658; Goal: ${goal[0].toUpperCase()+goal.slice(1)}</div>
+              <div class="cdown-big ${bigCls}" style="border-color:${gCol}40">
+                <span class="cdown-big-lbl" style="color:${gCol}">${goal[0].toUpperCase()+goal.slice(1)}</span>
+                <span class="cdown-big-val ${bigTC}" data-target="${goalMs}" data-big="1">${goalML<=0?'Ready!':fmtMins(goalML)}</span>
+              </div>
+              ${subRows ? `<div class="cdown-sub">${subRows}</div>` : ''}
+              <div class="prog-wrap"><div class="prog-bar" id="pb_${pen.id}_${idx}" style="width:${pct}%"></div></div>
+            </div>`;
+          } else {
+            cdHtml = `<div class="cdown-box" style="text-align:center;color:#7abf85;font-family:'Cinzel',serif;font-size:13px;font-weight:700">&#10003; Goal Reached</div>`;
           }
-
-          // progress bar
-          let prevAcc=0;
-          for(let i=0;i<ci;i++){const d=animal.stages[stages[i]];if(d)prevAcc+=d;}
-          const durCur=animal.stages[curStage]||0;
-          const elapsed=(Date.now()-startMs)/60000-prevAcc;
-          const pct=durCur?Math.max(0,Math.min(100,(elapsed/durCur)*100)):0;
-
-          cdHtml = `<div class="cdown-box">
-            <div class="cdown-goal-lbl" style="color:${gCol}">&#9658; Goal: ${goal[0].toUpperCase()+goal.slice(1)}</div>
-            <div class="cdown-big ${bigCls}" style="border-color:${gCol}40">
-              <span class="cdown-big-lbl" style="color:${gCol}">${goal[0].toUpperCase()+goal.slice(1)}</span>
-              <span class="cdown-big-val ${bigTC}" data-target="${goalMs}" data-big="1">${goalML<=0?'Ready!':fmtMins(goalML)}</span>
-            </div>
-            ${subRows?`<div class="cdown-sub">${subRows}</div>`:''}
-            <div class="prog-wrap"><div class="prog-bar" id="pb_${pen.id}_${idx}" style="width:${pct}%"></div></div>
-          </div>`;
-        } else {
-          cdHtml = `<div class="cdown-box" style="text-align:center;color:#7abf85;font-family:'Cinzel',serif;font-size:15px;font-weight:700">&#10003; Goal Reached</div>`;
         }
-      }
 
-      timerHtml = `
-        <div class="timer-btns">
-          <button class="tbtn tbtn-now" onclick="setNow('${pen.id}',${idx})">&#x23F1; Now</button>
-          ${hasAdol?`<button class="tbtn tbtn-adol ${goal==='adolescent'?'g-on':''}" onclick="setGoal('${pen.id}',${idx},'adolescent')">&#x25B6; Adol${adolMins?` (${fmtMins(adolMins)})`:''}</button>`:''}
-          ${hasElder?`<button class="tbtn tbtn-elder ${goal==='elder'?'g-on':''}" onclick="setGoal('${pen.id}',${idx},'elder')">&#x25B6; Elder${elderMins?` (${fmtMins(elderMins)})`:''}</button>`:''}
-          ${startMs?`<button class="tbtn tbtn-clr" onclick="clearTimer('${pen.id}',${idx})">&#x2715;</button>`:''}
-        </div>
-        <div class="field">
-          <label>Stage started</label>
-          <input type="datetime-local" value="${dtVal}" onchange="sk('${pen.id}',${idx},'startMs',this.value?new Date(this.value).getTime():null)">
+        timerHtml = `<div class="timer-btns">
+          ${hasAdol ? `<button class="tbtn tbtn-adol ${goal==='adolescent'?'g-on':''}" onclick="setGoal('${pen.id}',${idx},'adolescent')">Adol${adolMins ? ` (${fmtMins(adolMins)})` : ''}</button>` : ''}
+          ${hasElder ? `<button class="tbtn tbtn-elder ${goal==='elder'?'g-on':''}" onclick="setGoal('${pen.id}',${idx},'elder')">Elder${elderMins ? ` (${fmtMins(elderMins)})` : ''}</button>` : ''}
+          ${startMs ? `<button class="tbtn tbtn-clr" onclick="clearTimer('${pen.id}',${idx})">&#x2715; Reset</button>` : ''}
         </div>
         ${cdHtml}`;
-    }
+      }
 
-    // Beans note
-    let beansHtml = '';
-    if (animal) {
-      const b = animal.beans[curStage];
-      beansHtml = `<div class="beans-note">&#9885; ${curStage}: <span>${b||'?'} beans</span>${curStage==='adolescent'?' &#x2605;MAX':''}</div>`;
-    }
+      // Beans
+      const beansHtml = `<div class="beans-note">&#9885; ${curStage}: <span>${animal.beans[curStage]||'?'} beans</span>${curStage==='adolescent'?' &#x2605;MAX':''}</div>`;
 
-    content = `<div class="slot-content open" id="sc_${slotKey}">
-      <div class="field" style="margin-top:4px">
-        <label>Animal</label>
-        <select onchange="onAnimal('${pen.id}',${idx},this.value)">${aopts}</select>
-      </div>
-      ${breedHtml}
-      ${pills?`<div class="stage-pills">${pills}</div>`:''}
-      ${beansHtml}
-      ${timerHtml}
-      ${animal?`<div style="margin-top:4px;text-align:right"><button class="tbtn tbtn-rm" onclick="clearSlot('${pen.id}',${idx})">Remove animal</button></div>`:''}
-    </div>`;
-  } else {
-    content = `<div class="slot-content" id="sc_${slotKey}"></div>`;
+      content = `<div class="slot-content open" id="sc_${slotKey}">
+        <div class="stage-pills">${pills}</div>
+        ${beansHtml}
+        ${timerHtml}
+        <div style="margin-top:4px;text-align:right">
+          <button class="tbtn tbtn-clr" style="font-size:9px" onclick="clearSlot('${pen.id}',${idx})">Remove</button>
+        </div>
+      </div>`;
+    }
   }
 
   return `<div class="slot" id="sc_${pen.id}_${idx}">
-    <div class="slot-header" onclick="toggleSlot('${pen.id}',${idx})">
+    <div class="slot-header" ${animal ? `onclick="toggleSlot('${pen.id}',${idx})"` : ''}>
       <span class="slot-num">${idx+1}</span>
       ${imgTag}
       <span class="slot-name ${animal?'has-animal':'empty'}">${nameLabel}</span>
-      ${animal?`<span class="stage-tag ${curStage}">${curStage[0].toUpperCase()+curStage.slice(1)}</span>`:''}
+      ${animal ? `<span class="stage-tag ${curStage}">${curStage[0].toUpperCase()+curStage.slice(1)}</span>` : ''}
       ${headerExtra}
-      <span class="slot-chevron ${isOpen?'open':''}">&#9656;</span>
+      ${animal ? `<span class="slot-chevron ${isOpen?'open':''}">&#9656;</span>` : ''}
     </div>
     ${content}
   </div>`;
 }
+
 
 // ═══════════════════════════════════════════
 //  INTERACTIONS
@@ -781,13 +847,13 @@ function toggleSlot(penId, idx) {
 function onAnimal(penId, idx, animalId) {
   ensureSlots(penId);
   const a = animalId ? getAnimal(animalId) : null;
-  penData[penId][idx] = {animalId, breed:'Any', stage:a?(a.hasEgg?'egg':'child'):'child', startMs:null, goal:'adolescent'};
+  penData[penId][idx] = {animalId, stage:a?(a.hasEgg?'egg':'child'):'child', startMs:animalId?Date.now():null, goal:'adolescent'};
   save(); buildApp();
 }
 function onStage(penId, idx, stage) {
   ensureSlots(penId);
   penData[penId][idx].stage = stage;
-  penData[penId][idx].startMs = null;
+  penData[penId][idx].startMs = Date.now();
   save(); buildApp();
 }
 function sk(penId, idx, key, val) {
@@ -812,7 +878,7 @@ function clearTimer(penId, idx) {
 }
 function clearSlot(penId, idx) {
   ensureSlots(penId);
-  penData[penId][idx] = {animalId:'', breed:'Any', stage:'child', startMs:null, goal:'adolescent'};
+  penData[penId][idx] = {animalId:'', stage:'child', startMs:null, goal:'adolescent'};
   save(); buildApp();
 }
 
